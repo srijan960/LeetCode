@@ -1,0 +1,37 @@
+class Solution {
+    public boolean detectCapitalUse(String word) {
+        String s="";
+        s+=word;
+        if(s.length()==0) return false;
+        boolean AllUpper=false;
+        boolean AllLower=false;
+        if(Character.isUpperCase(s.charAt(0))){
+            AllUpper=true;
+            AllLower=true;
+            for(int i=1;i<s.length();i++){
+                if(!Character.isUpperCase(s.charAt(i))&&AllUpper){
+                    AllUpper=false;
+                }
+                if(Character.isUpperCase(s.charAt(i))&&AllLower){
+                    AllLower=false;
+                }
+                if(!AllLower&&!AllUpper){
+                    break;
+                }
+                
+            }
+        }
+        else if(Character.isLowerCase(s.charAt(0))){
+            AllLower=true;
+             for(int i=1;i<s.length();i++){
+                if(Character.isUpperCase(s.charAt(i))){
+                    AllLower=false;
+                    break;
+                }
+             } 
+         }
+        if(AllUpper||AllLower) return true;
+        else return false;
+             
+    }
+}
