@@ -1,0 +1,41 @@
+public class Solution{
+    public static boolean isPalindrome(String s){
+       if(s.length()==1||s.length()==0) return true;
+        int i=0;
+        int j=s.length()-1;
+        char a,b;
+        while(i<j){
+          a=s.charAt(i);
+          b=s.charAt(j);
+          if(Character.isAlphabetic(a)&&Character.isDigit(b)||Character.isAlphabetic(b)&&Character.isDigit(a)){
+              return false;
+          }
+          if(Character.isDigit(a)){
+           if(a==b){
+               i++;
+               j--;
+           }
+           if(a!=b){
+               return false;
+           }
+        }
+          if(Character.isAlphabetic(a)&&Character.isAlphabetic(b)){
+              a=Character.toLowerCase(a);
+              b=Character.toLowerCase(b);
+              if(a==b){
+                  i++;
+                  j--;
+              }
+             if(a!=b){
+                 return false;
+             }
+          }
+          if(!Character.isAlphabetic(a)&&!Character.isDigit(a)){
+              i++;
+          }
+           if(!Character.isAlphabetic(b)&&!Character.isDigit(b)){
+              j--;
+          }
+        }  
+        return true;
+    }}
