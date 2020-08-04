@@ -1,0 +1,15 @@
+class Solution {
+    public boolean isPowerOfFour(int num) {
+        if(num<0) return false;
+        int SetBit=0;
+        int n=num;
+        while(num>0){
+            SetBit++;
+            num=num&(num-1);
+        }
+        if(SetBit>1) return false;
+        int k=(int)((Math.log(n)/Math.log(2))+1);
+        if(k%2==1) return true;
+        return false;
+    }
+}
