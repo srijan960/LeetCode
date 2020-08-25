@@ -1,0 +1,34 @@
+class Solution {
+    public int[] dailyTemperatures(int[] T) {
+        Stack<Integer> st=new Stack<>();
+        ArrayList<Integer> list=new ArrayList<Integer>();
+        for(int i=T.length-1;i>=0;i--){
+            if(st.empty()){
+                list.add(0);
+            }
+            if(!st.empty()&&T[st.peek()]>T[i]){
+               list.add(Math.abs(i-st.peek()));
+            }
+            else if(!st.empty()&&T[st.peek()]<=T[i]){
+                while(!st.empty()&&T[st.peek()]<=T[i]){
+                    st.pop();
+                }
+                if(!st.empty()){
+                    list.add(Math.abs(i-st.peek()));
+                }
+                else{
+                    list.add(0);
+                }
+            }
+            st.push(i);
+        }
+        int[] res=new int[list.size()];
+        int index=0;
+        for(int i=list.size()-1;i>=0;i--){
+            res[index++]=list.get(i);
+        }
+        return res; 
+        
+        
+    }
+}
