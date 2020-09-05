@@ -1,0 +1,25 @@
+class BSTIterator {
+   private Stack<TreeNode> st;
+    public BSTIterator(TreeNode root) {
+        st=new Stack<>();
+        Traverse(root);
+    }
+    public void Traverse(TreeNode root){
+        while(root!=null){
+            st.push(root);
+            root=root.left;
+        }
+    }
+    
+    /** @return the next smallest number */
+    public int next() {
+        TreeNode node=st.pop();
+        Traverse(node.right);
+        return node.val;
+    }
+    
+    /** @return whether we have a next smallest number */
+    public boolean hasNext() {
+        return !st.isEmpty();
+    }
+}
