@@ -1,0 +1,30 @@
+class Solution {
+    public int rob(int[] nums) {
+        int n = nums.length;
+         if(n == 0) return 0;
+         if(n == 1) return nums[0];
+        int[] a = new int[nums.length - 1];
+        int[] b = new int[nums.length - 1];
+        for(int i = 0; i < n - 1; i++){
+            a[i] = nums[i];
+        }
+        int index = 0;
+        for(int i = 1; i < n; i++){
+            b[index++] = nums[i];
+        }
+        return Math.max(Maximun(a),Maximun(b));
+    }
+     
+    public int Maximun(int[] nums){
+        int n = nums.length;
+        int[] arr = new int[n];
+       
+        if(n >= 1) arr[0] = nums[0];
+        if(n >= 2) arr[1] = Math.max(nums[0], nums[1]);
+        for(int i=2;i<n;i++){
+            arr[i] = Math.max(arr[i-1], arr[i-2]+ nums[i]);
+        }
+        return arr[n-1];
+    }
+    
+}
