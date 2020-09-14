@@ -1,0 +1,33 @@
+class Solution {
+    TreeNode first,middle,prev,last;
+    public void recoverTree(TreeNode root) {
+        first = middle = prev = last = null;
+        helper(root);
+        if(first != null && last != null){
+            int temp = first.val;
+            first.val = last.val;
+            last.val = temp;
+        }
+        else{
+             int temp = first.val;
+            first.val = middle.val;
+            middle.val = temp;
+            
+            }
+    }
+    public void helper(TreeNode root){
+        if(root == null) return;
+        else{
+            helper(root.left);
+            if(prev != null && prev.val > root.val){
+               if(first ==null){
+                first = prev;
+                middle = root;
+            }
+            else last = root;
+            }
+            prev = root;
+            helper(root.right);
+        }
+    }
+}
