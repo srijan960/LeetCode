@@ -1,0 +1,43 @@
+class Solution {
+    public int compareVersion(String version1, String version2) {
+       int index1 = 0;
+       int index2 = 0;
+        int ans = 0;
+    while(index1 < version1.length() || index2 < version2.length()){
+        String a = "0";
+        String b = "0";
+        boolean LeadZero1 = false;
+        boolean LeadZero2 = false;
+        while(index1 < version1.length()){
+            if(version1.charAt(index1) =='.') break;
+            if(version1.charAt(index1) !='0' && !LeadZero1 ){
+               a += version1.charAt(index1); 
+               LeadZero1 = true;
+            }
+            else if(LeadZero1) a += version1.charAt(index1); 
+            index1++;
+        }
+         while(index2 < version2.length()){
+            if(version2.charAt(index2) =='.') break;
+            if(version2.charAt(index2) !='0' && !LeadZero2){
+              b += version2.charAt(index2);
+              LeadZero2 = true;  
+                
+            }
+            else if(LeadZero2) b += version2.charAt(index2);
+            index2++;
+        }
+        if(Integer.valueOf(a) > Integer.valueOf(b)){
+            ans = 1;
+            break;
+        }
+        else if(Integer.valueOf(a) < Integer.valueOf(b)){
+            ans = -1;
+            break;
+        }
+        index1++;
+        index2++;
+    }
+        return ans;
+    }
+}
