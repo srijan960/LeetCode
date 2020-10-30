@@ -1,0 +1,51 @@
+class Solution {
+    public int longestIncreasingPath(int[][] matrix) {
+        if(matrix == null || matrix.length == 0) return 0;
+  
+        int m = matrix.length;
+        int n = matrix[0].length;
+        int[][] dp = new int[m][n];
+       // Arrays.fill(dp, -1);
+        int res = Integer.MIN_VALUE;
+        
+        for(int i = 0; i < m; i++){
+            for(int j = 0; j < n; j++){
+                int CellResult = helper(i, j, m, n, dp, matrix);
+               // System.out.print(CellResult +" " );
+                
+                res = Math.max(res, CellResult);
+            }
+           // System.out.println();
+        }
+       
+        return res + 1;
+        
+    }
+    public int helper(int i, int j, int m, int n, int[][] dp, int[][] matrix){
+        if(dp[i][j] != 0) return dp[i][j];
+        else if(i < 0 || i >= m || j < 0 || j >= n ) return 0;
+        
+        int x = 0;
+        int y = 0;
+        int w = 0;
+        int z = 0;
+        
+        if(i < m - 1 && matrix[i + 1][j] > matrix[i][j]){
+            x = dp[i][j] = 1 + helper(i + 1, j, m, n, dp, matrix);
+        }
+        if(i > 0 && matrix[i - 1][j] > matrix[i][j]){
+           
+            y = dp[i][j] = 1 + helper(i - 1, j, m, n, dp, matrix);
+        }
+        if(j < n - 1  && matrix[i][j + 1] > matrix[i][j]){
+            w = dp[i][j] = 1 + helper(i, j + 1, m, n, dp, matrix);
+        }
+        if(j > 0 && matrix[i][j - 1] > matrix[i][j]){
+            z = dp[i][j] = 1 + helper(i, j - 1, m, n, dp, matrix);
+        }
+        
+        
+        return dp[i][j] = Math.max(Math.max(x, y), Math.max(w, z));
+        
+    }
+}
