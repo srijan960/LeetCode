@@ -1,0 +1,30 @@
+class Solution {
+    public int smallestDivisor(int[] nums, int threshold) {
+       int MaxNum = 0;
+       
+        
+        int left = 1;
+        int right = nums[nums.length - 1];
+        
+        while(left < right){
+            int mid = left + (right - left) / 2;
+            if(helper(nums, mid) <= threshold){
+                right = mid;
+            }
+            else left = mid + 1;
+        }
+        
+        return left;
+       
+    }
+    
+    public static int helper(int[] nums, int mid){
+        int res = 0;
+        
+        for(int i : nums){
+            res += (i / mid) + (i % mid == 0 ? 0 : 1);
+        }
+        
+        return res;
+    }
+}
