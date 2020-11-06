@@ -1,0 +1,63 @@
+class Solution {
+    public boolean canFinish(int numCourses, int[][] prerequisites) {
+        Map<Integer,ArrayList<Integer>> adj = new HashMap<>();
+        
+        for(int i = 0; i < prerequisites.length; i++){
+           ArrayList<Integer> list = new ArrayList<>();
+            if(adj.containsKey(prerequisites[i][0])){
+                list = adj.get(prerequisites[i][0]);
+            }
+            for(int j = 1; j < prerequisites[i].length; j++){
+                list.add(prerequisites[i][j]);
+            }
+            adj.put(prerequisites[i][0],list);
+        }
+         for(Map.Entry<Integer, ArrayList<Integer>> e : adj.entrySet()){
+             System.out.print(e.getKey() +"m");
+              ArrayList<Integer> list = adj.get(e.getKey()); 
+             for(int i : list){
+                 System.out.println(i +"m");
+             }
+             
+         }
+       
+        
+        boolean[] visited = new boolean[numCourses];
+        boolean[] rec = new boolean[numCourses];
+        
+        for(Map.Entry<Integer, ArrayList<Integer>> e : adj.entrySet()){
+            int a = (int)e.getKey();
+            System.out.println(a);
+            if(!visited[a]){
+                if(dfs(a, visited, rec, adj)) return false;
+            }
+        }
+        
+        return true;
+        
+    }
+    
+    public boolean dfs(int node, boolean[] visited, boolean[] rec,  Map<Integer,ArrayList<Integer>> adj){
+        if(!visited[node]){
+            System.out.println(node +"v");
+            visited[node] = true;
+            rec[node] = true;
+        ArrayList<Integer> list = adj.get(node);    
+        if(list != null){
+        for(int i = 0; i < list.size(); i++){
+            System.out.println(list.get(i) +" lis");
+            if(!visited[list.get(i)] && dfs(list.get(i), visited, rec, adj)) {
+                System.out.println("ss");
+                return true;
+            }
+            else if(rec[list.get(i)] == true) {
+                System.out.println("ccc");
+                return true;
+            }
+        }
+        }}
+        
+        rec[node] = false;
+        return false;
+    }
+}
