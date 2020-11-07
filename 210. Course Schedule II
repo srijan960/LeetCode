@@ -1,0 +1,61 @@
+class Solution {
+    public int[] findOrder(int numCourses, int[][] prerequisites) {
+        //if(prerequisites.length == 0) return new int[0];
+        
+        int[] degree = new int[numCourses];
+        ArrayList<ArrayList<Integer>> graph = new ArrayList<>();
+        for(int i = 0; i < numCourses; i++){
+            graph.add(new ArrayList<>());
+        }
+        
+        for(int i = 0; i < prerequisites.length; i++){
+            graph.get(prerequisites[i][1]).add(prerequisites[i][0]);
+            degree[prerequisites[i][0]]++;
+        }
+        
+        int[] res = new int[numCourses];
+        if(kahn(graph, degree, numCourses, res))
+            return res;
+        
+        else {
+            //System.out.println("yoo");
+            
+            return new int[0];
+        }
+    }
+    
+    public static boolean kahn(ArrayList<ArrayList<Integer>> graph, int[] degree, int numCourses, int[] res){
+        
+        Queue<Integer> que = new LinkedList<>();
+        for(int i = 0; i < numCourses; i++){
+            if(degree[i] == 0){
+              que.add(i);  
+            } 
+        }
+        
+        int count = 0;
+        int index = 0;
+        while(!que.isEmpty()){
+           // System.out.println("ys");
+            int node = que.poll();
+            
+            for(int i :  graph.get(node)){
+                degree[i] -= 1;
+                if(degree[i] == 0) {
+                   // System.out.println(i);
+                    que.add(i);
+                }
+            }
+            res[index++] = node;
+            count += 1;
+        }
+        
+        
+        if(count != numCourses) {
+             System.out.println("ys");
+            return false;
+        }
+        
+            else return true;
+    }
+}
