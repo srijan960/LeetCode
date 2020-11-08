@@ -1,0 +1,20 @@
+class Solution {
+   
+    public int findTilt(TreeNode root) {
+        int[] arr = new int[1];
+        helper(root, arr);
+        
+        return arr[0];
+    }
+    
+    public static int helper(TreeNode root, int[] arr){
+        if(root == null) return 0;
+        
+        int l = helper(root.left, arr);
+        int r = helper(root.right, arr);
+        
+        arr[0] += Math.abs(l - r);
+        
+        return l + r + root.val;
+    }
+}
