@@ -1,0 +1,38 @@
+class Solution {
+    public int networkDelayTime(int[][] times, int N, int K) {
+        PriorityQueue<int[]> pque= new PriorityQueue<>((a, b) -> (a[0] - b[0]));
+        Map<Integer, Map<Integer, Integer>> graph = new HashMap<>();
+        
+        for(int i = 0; i < times.length; i++){
+            graph.putIfAbsent(times[i][0], new HashMap<>());
+            graph.get(times[i][0]).put(times[i][1], times[i][2]);
+        }
+        
+        int[] dis = new int[N + 1];
+        Arrays.fill(dis, Integer.MAX_VALUE);
+        dis[K] = 0;
+        boolean[] visited = new boolean[N + 1];
+        pque.add(new int[]{0, K});
+        int ans = 0;
+        
+        while(!pque.isEmpty()){
+            int[] curr = pque.poll();
+            int Node = curr[1];
+            if(visited[Node]) continue;
+                visited[Node] = true;
+            int curDis = curr[0];
+             ans = curDis;
+            N--;
+            if(graph.containsKey(Node)){
+                for(int Next : graph.get(Node).keySet()){
+                    if(visited[Node] && curDis + graph.get(Node).get(Next) < dis[Next]){
+                        dis[Next] = curDis + graph.get(Node).get(Next);
+                        pque.offer(new int[]{dis[Next], Next });
+                    }
+                }
+            }
+        }
+        return N == 0 ? ans : -1;
+        
+    }
+}
