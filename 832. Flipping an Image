@@ -1,0 +1,41 @@
+class Solution {
+    public int[][] flipAndInvertImage(int[][] A) {
+        for(int i = 0; i < A.length; i++){
+            int front = 0;
+            int end = A[i].length - 1;
+            while(front < end){
+                A[i][front] = A[i][front] + A[i][end];
+                A[i][end] = A[i][front] - A[i][end];
+                A[i][front] = A[i][front] - A[i][end];
+                
+                if(A[i][front] == 1){
+                    A[i][front] = 0;
+                }
+                else if(A[i][front] == 0){
+                    A[i][front] = 1;
+                }
+                if(A[i][end] == 1){
+                    A[i][end] = 0;
+                }
+                else if(A[i][end] == 0){
+                    A[i][end] = 1;
+                }
+                
+                front++;
+                end--;
+            }
+            if(front == end){
+               if(A[i][front] == 1){
+                    A[i][front] = 0;
+                }
+                else if(A[i][front] == 0){
+                    A[i][front] = 1;
+                } 
+            }
+            
+            }
+        return A;
+        }
+        
+        
+    }
