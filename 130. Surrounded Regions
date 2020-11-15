@@ -1,0 +1,54 @@
+class Solution {
+    boolean seen;
+    public void solve(char[][] board) {
+        seen = true;
+        if(board.length <= 1) return;
+        if(board[0].length <= 1) return;
+        
+        boolean[][] visited = new boolean[board.length][board[0].length];
+        
+        for(int i = 1; i < board.length; i++){
+            for(int j = 1; j < board[0].length; j++){
+                if(board[i][j] == 'O' && !visited[i][j]){
+                    seen = false;
+                    dfs(i, j, board, visited);
+                    if(!seen){
+                        mark(i, j, board);
+                    }
+                    seen = true;
+                }
+            }
+        }
+    }
+    
+    public void dfs(int i, int j, char[][] board, boolean[][] visited){
+        
+        if(i < 0 || i > board.length - 1 || j < 0 || j > board[0].length - 1 || visited[i][j] || board[i][j] == 'X'){
+            return;
+        }
+        
+        if(i == 0 || i == board.length - 1 || j == 0 || j == board[0].length - 1){
+            seen = true;
+        }
+        
+        visited[i][j] = true;
+        dfs(i + 1, j, board, visited);
+        dfs(i, j + 1, board, visited);
+        dfs(i - 1, j, board, visited);
+        dfs(i, j - 1, board, visited);
+    }
+    
+    public void mark(int i, int j, char[][] board){
+       if(i < 0 || i > board.length - 1 || j < 0 || j > board[0].length - 1 || board[i][j] == 'X'){
+            return;
+        }
+        
+        board[i][j] = 'X';
+        mark(i + 1, j, board);
+        mark(i, j + 1, board);
+        mark(i - 1, j, board);
+        mark(i, j - 1, board);
+        
+        
+    }
+}
