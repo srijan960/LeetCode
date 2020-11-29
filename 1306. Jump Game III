@@ -1,0 +1,36 @@
+class Solution {
+    public boolean canReach(int[] arr, int start) {
+        Queue<Integer> que = new LinkedList<>();
+        que.add(start);
+        
+        while(!que.isEmpty()){
+            int size = que.size();
+            
+            for(int i = 0; i < size; i++){
+                int point = que.poll();
+                
+                if(point - arr[point] >= 0){
+                    if(arr[point - arr[point]] == 0){
+                        return true;
+                    }
+                    else if(arr[point - arr[point]] > 0){
+                        que.add(point - arr[point]);
+                    }
+                }
+                if(point + arr[point] < arr.length){
+                    if(arr[point + arr[point]] == 0){
+                        return true;
+                    }
+                    else if(arr[point + arr[point]] > 0){
+                        que.add(point + arr[point]);
+                    }
+                }
+                arr[point] = -1;
+            }
+            
+            
+        }
+        
+        return false;
+    }
+}
