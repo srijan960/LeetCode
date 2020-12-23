@@ -1,0 +1,22 @@
+class Solution {
+    public String removeDuplicateLetters(String s) {
+      
+       char[] freq = new char[26];
+        for(char c : s.toCharArray()){
+            freq[c - 'a']++;
+        }
+        boolean[] flag = new boolean[26];
+        StringBuilder res = new StringBuilder();
+        for(char c : s.toCharArray()){
+            freq[c - 'a']--;
+            if(flag[c - 'a']) continue;
+            while(res.length() > 0 && res.charAt(res.length() - 1) > c && freq[res.charAt(res.length() - 1) - 'a'] > 0){
+                flag[res.charAt(res.length() - 1) - 'a'] = false;
+                res.deleteCharAt(res.length() - 1);
+            }
+            res.append(c);
+            flag[c - 'a'] = true;
+        }
+        return res.toString();
+    }
+}
